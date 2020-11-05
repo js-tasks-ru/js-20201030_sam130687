@@ -7,6 +7,6 @@
 export function sortStrings(arr, param = 'asc') {
   let res = arr.slice();
   return res.sort(function (a, b) {
-    return ((param == 'asc') ? 1 : -1) * a.localeCompare(b, 'co', { caseFirst: 'upper' });
+    return ((param == 'asc') ? 1 : -1) * a.localeCompare(b, ['ru', 'en'], { caseFirst: 'upper' });
   });
 };
