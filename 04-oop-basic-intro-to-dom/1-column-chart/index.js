@@ -71,7 +71,8 @@ export default class ColumnChart {
     this.genData();
   }
 
-  update() {
+  update(data) {
+    this.data = data;
     this.element.querySelector('.column-chart__chart').innerHTML = '';
     this.genData();
   }
