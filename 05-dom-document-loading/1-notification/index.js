@@ -1,5 +1,5 @@
 export default class NotificationMessage {
-  static justWork = false;
+  static activeNotification = false;
 
   constructor(label = '',
               {
@@ -19,7 +19,7 @@ export default class NotificationMessage {
   };
 
   show(inNode){
-    if (NotificationMessage.justWork) {
+    if (NotificationMessage.activeNotification) {
       return ;
     };
 
@@ -27,7 +27,7 @@ export default class NotificationMessage {
       inNode.insertAdjacentHTML('afterbegin', this.element.outerHTML);
     } else {
       document.body.append(this.element);
-      NotificationMessage.justWork = true;
+      NotificationMessage.activeNotification = true;
       setTimeout(() => this._divRemove(), this.duration);
     };
   };
@@ -35,7 +35,7 @@ export default class NotificationMessage {
   _divRemove(){
     this.element.innerHTML = '';
     this.destroy();
-    NotificationMessage.justWork = false;
+    NotificationMessage.activeNotification = false;
   };
 
   get template() {

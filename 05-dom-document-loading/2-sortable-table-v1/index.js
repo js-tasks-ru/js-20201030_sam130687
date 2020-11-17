@@ -8,7 +8,7 @@ export default class SortableTable {
   };
   // Создание вставляемого узла.
   createNode() {
-    let el = document.createElement('div');
+    const el = document.createElement('div');
     el.innerHTML = this.template;
     this.element = el.firstElementChild;
     this.subElements = this.getBodyElements(this.element);
@@ -125,21 +125,17 @@ export default class SortableTable {
       //Сортировка строк
       this.data = this.data.sort(function (rowA, rowB) {
         // На каждый тип данных свой сортировщик
+        const a = rowA[orderHeader.id];
+        const b = rowB[orderHeader.id];
         switch (orderHeader.sortType) {
           case 'string':
-            const strA = rowA[orderHeader.id];
-            const strB = rowB[orderHeader.id];
-            return ordDir * strA.localeCompare(strB, ['ru', 'en'], {caseFirst: 'upper'});
+            return ordDir * a.localeCompare(b, ['ru', 'en'], {caseFirst: 'upper'});
             break;
           case 'number':
-            const numA = rowA[orderHeader.id];
-            const numB = rowB[orderHeader.id];
-            return ordDir * (numA - numB);
+            return ordDir * (a - b);
             break;
           case 'date':
-            const dA = rowA[orderHeader.id];
-            const dB = rowB[orderHeader.id];
-            return ordDir * (dA - dB);
+            return ordDir * (a - b);
             break;
           default:
             throw new Error(`Error type of sorting = ${orderHeader.sortType}"!`);
