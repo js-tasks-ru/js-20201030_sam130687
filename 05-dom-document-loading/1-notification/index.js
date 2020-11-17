@@ -1,15 +1,20 @@
 export default class NotificationMessage {
-  static activeNotification = false;
+  static activeNotification;
 
   constructor(label = '',
               {
                 duration = 1000,
                 type = 'success'
               } = {}) {
+
+    if (NotificationMessage.activeNotification){
+      NotificationMessage.activeNotification.remove();
+    }
     this.label = label;
     this.duration = duration;
     this.type = type;
     this._createNode();
+    NotificationMessage.activeNotification = this.element;
   }
 
   _createNode() {
@@ -18,24 +23,9 @@ export default class NotificationMessage {
     this.element = el.firstElementChild;
   };
 
-  show(inNode){
-    if (NotificationMessage.activeNotification) {
-      return ;
-    };
-
-    if (inNode) {
-      inNode.insertAdjacentHTML('afterbegin', this.element.outerHTML);
-    } else {
-      document.body.append(this.element);
-      NotificationMessage.activeNotification = true;
-      setTimeout(() => this._divRemove(), this.duration);
-    };
-  };
-
-  _divRemove(){
-    this.element.innerHTML = '';
-    this.destroy();
-    NotificationMessage.activeNotification = false;
+  show(inNode = document.body){
+    inNode.append(this.element);
+    setTimeout(() => this.remove(), this.duration);
   };
 
   get template() {
@@ -56,5 +46,6 @@ export default class NotificationMessage {
 
   destroy() {
     this.remove();
+    NotificationMessage.activeNotification = null;
   }
 }
