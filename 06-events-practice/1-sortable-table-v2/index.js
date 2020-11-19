@@ -54,31 +54,16 @@ export default class SortableTable {
     return elementAggregator;
   };
 
-  getSortHeaderCell(item){
-    return `<div class="sortable-table__cell" data-id="${item.id}" data-sortable="${item.sortable}" data-order="${this.ordHeader['order']}">
+  // Генератор заголовков
+  getHeaders(headerArray) {
+    // Учитывается что если сейчас есть сортируемый столбец то рисуем сортировочный крыжик.
+    return headerArray.map(item => {
+      return `<div class="sortable-table__cell" data-id="${item.id}" data-sortable="${item.sortable}" data-order="${(item.id === this.ordHeader['id']) ? this.ordHeader['order'] : ''}">
           <span>${item.title}</span>
           <span data-element="arrow" class="sortable-table__sort-arrow">
             <span class="sort-arrow"></span>
           </span>
         </div>`
-  };
-
-  getSimpleHeaderCell(item){
-    return `<div class="sortable-table__cell" data-id="${item.id}" data-sortable="${item.sortable}">
-                <span>${item.title}</span>
-            </div>`;
-  };
-
-  // Генератор заголовков
-  getHeaders(headerArray) {
-    //id: 'title', title: 'Name', sortable: true, sortType: 'string'
-    // Учитывается что если сейчас есть сортируемый столбец то рисуем сортировочный крыжик.
-    return headerArray.map(item => {
-      if (item.id === this.ordHeader['id']) {//((this.ordHeader) && (item.id == this.ordHeader.orderHeader.id)) {
-        return this.getSortHeaderCell(item);
-      } else {
-        return this.getSimpleHeaderCell(item);
-      }
     }).join('');
   };
   // генератор столбоцов строки
