@@ -8,7 +8,7 @@ export default class SortableTable {
     this.findDefaultSortColumn();
     this.sort();
     this.render();
-    this.eventListener();
+    this.addListener();
   };
 
   findDefaultSortColumn(){
@@ -26,7 +26,7 @@ export default class SortableTable {
     this.subElements.body.innerHTML = this.getRows(this.data);
   };
   // Назначение события обработки клика колонки
-  eventListener(){
+  addListener(){
     this.subElements.header.addEventListener( "pointerdown" , this.headerClick.bind(this));
   };
 
