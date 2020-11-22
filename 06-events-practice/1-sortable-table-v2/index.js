@@ -5,6 +5,7 @@ export default class SortableTable {
               {data=[]} = {}) {
     this.header = header;
     this.data = data;
+    this.headerClick = this.headerClick.bind(this);
     this.findDefaultSortColumn();
     this.sort();
     this.render();
@@ -27,7 +28,7 @@ export default class SortableTable {
   };
   // Назначение события обработки клика колонки
   addListener(){
-    this.subElements.header.addEventListener( "pointerdown" , this.headerClick.bind(this));
+    this.subElements.header.addEventListener( "pointerdown" , this.headerClick);
   };
 
   headerClick(event){
@@ -138,7 +139,7 @@ export default class SortableTable {
   };
 
   remove () {
-    this.subElements.header.removeEventListener( "pointerdown" , this.headerClick.bind(this));
+    this.subElements.header.removeEventListener( "pointerdown" , this.headerClick);
     this.element.remove();
   }
 

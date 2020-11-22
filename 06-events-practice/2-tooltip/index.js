@@ -1,10 +1,13 @@
 class Tooltip {
+  static instance;
+
   constructor() {
     if (this.instance) {
       return;
     }
     this.instance = this;
     this.render();
+    this.handler = this.handler.bind(this);
   }
 
   handler(event) {
@@ -23,8 +26,8 @@ class Tooltip {
   }
 
   addListener(){
-    document.body.addEventListener( "pointerover" , this.handler.bind(this));
-    document.body.addEventListener( "pointerout" , this.handler.bind(this));
+    document.body.addEventListener( "pointerover" , this.handler);
+    document.body.addEventListener( "pointerout" , this.handler);
   };
 
   render(text) {
@@ -43,8 +46,8 @@ class Tooltip {
   };
 
   remove () {
-    document.body.removeEventListener( "pointerover" , this.handler.bind(this));
-    document.body.removeEventListener( "pointerout" , this.handler.bind(this));
+    document.body.removeEventListener( "pointerover" , this.handler);
+    document.body.removeEventListener( "pointerout" , this.handler);
     this.element.remove();
   }
 
