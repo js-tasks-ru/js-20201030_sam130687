@@ -1,7 +1,7 @@
 export default class RangePicker {
   element = null;
   subElements = {};
-  IsSelect = true;
+  isSelect = true;
   selected = {
     from: new Date(),
     to: new Date()
@@ -60,11 +60,11 @@ export default class RangePicker {
   // клики верхнего уровня нужно всплытие чтобы после выбора интервала закрыть все.
   onClickDoc = event => {
     // Проверим что мы это мы в цели
-    const IsIAm = this.element.contains(event.target);
+    const isIAm = this.element.contains(event.target);
     // А собсно открыты ли мы?
     const isIOPen = this.element.classList.contains('rangepicker_open');
     // Я существую? значит должен умереть
-    if (isIOPen && !IsIAm) {
+    if (isIOPen && !isIAm) {
       this.close();
     }
   };
@@ -81,17 +81,17 @@ export default class RangePicker {
   };
 
   renderSelector() {
-    const LeftDate = new Date(this.leftDateFrom);
-    const RightDate = new Date(LeftDate);
+    const leftDate = new Date(this.leftDateFrom);
+    const rightDate = new Date(leftDate);
     const { selector } = this.subElements;
-    RightDate.setMonth(RightDate.getMonth() + 1);
+    rightDate.setMonth(rightDate.getMonth() + 1);
 
     selector.innerHTML = `
       <div class="rangepicker__selector-arrow"></div>
       <div class="rangepicker__selector-control-left"></div>
       <div class="rangepicker__selector-control-right"></div>
-      ${this.renderCalendar(LeftDate)}
-      ${this.renderCalendar(RightDate)}
+      ${this.renderCalendar(leftDate)}
+      ${this.renderCalendar(rightDate)}
     `;
 
     const controlLeft = selector.querySelector('.rangepicker__selector-control-left');
@@ -190,19 +190,19 @@ export default class RangePicker {
     // convert to date
     const dateVal = new Date(value);
     // Если была выбрана дата то берем как начало или проставляем конец
-    if (this.IsSelect) {
+    if (this.isSelect) {
         this.selected.from = dateVal;
         this.selected.to = null;
-        this.IsSelect = false;
+        this.isSelect = false;
     } else {
         this.selected.to = (dateVal > this.selected.from) ? dateVal : this.selected.from;
         this.selected.from = (dateVal < this.selected.from) ? dateVal : this.selected.from;
-        this.IsSelect = true;
+        this.isSelect = true;
       };
 
     this.renderHighlight();
 
-    if (this.IsSelect){
+    if (this.isSelect){
       this.close();
       this.subElements.from.innerHTML = this.formatDate(this.selected.from);
       this.subElements.to.innerHTML = this.formatDate(this.selected.to);
